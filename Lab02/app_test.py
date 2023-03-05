@@ -47,6 +47,7 @@ class ApplicationTest(unittest.TestCase):
         app.MailSystem.send = Mock(side_effect=FakeMail.send)
         self.app.notify_selected()
         self.assertEqual( len(self.people), self.app.mailSystem.write.call_count)
+        
         print(self.app.mailSystem.write.call_args_list)
         self.assertEqual( len(self.people), self.app.mailSystem.send.call_count)
         print(self.app.mailSystem.send.call_args_list)
