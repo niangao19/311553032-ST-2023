@@ -31,7 +31,7 @@ class Test(unittest.TestCase):
             id = self.user_id[i]
             name = self.students.get_name(id)
             self.assertEqual( name, self.user_name[i] )
-            if men == i :
+            if men == id :
                 men = men + 1
             print( f'id {id} : {name}' )  
         name = self.students.get_name(men)
