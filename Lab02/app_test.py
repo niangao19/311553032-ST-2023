@@ -13,7 +13,6 @@ class FakeMail:
         print(f'{context}')
 
 class ApplicationTest(unittest.TestCase):
-    i = 0
     mock_file_content = "William\nOliver\nHenry\nLiam"
     people = ["William" ,"Oliver" ,"Henry","Liam"]
     selected = ["William" ,"Oliver" ,"Henry"]
