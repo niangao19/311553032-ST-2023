@@ -22,6 +22,7 @@ class ApplicationTest(unittest.TestCase):
         app.Application.get_names = Mock( return_value= (self.people,self.selected))
         self.app = app.Application()
         pass
+#        不確定這個算不算stub感覺像是spy open，如果可以請助教幫忙解惑，謝謝！    
 #        with unittest.mock.patch(
 #               'builtins.open',
 #                new=unittest.mock.mock_open(read_data=self.mock_file_content),
