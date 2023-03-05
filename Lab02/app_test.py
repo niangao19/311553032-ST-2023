@@ -37,7 +37,7 @@ class ApplicationTest(unittest.TestCase):
  
     def test_app(self):
         # mock
-        self.app.get_random_person = Mock(side_effect= ["William" ,"Oliver" ,"Henry","Liam"])
+        self.app.get_random_person = Mock(side_effect= self.people)
         name = self.app.select_next_person()
         print(f'{name} selected')
         self.assertEqual(name,'Liam')
