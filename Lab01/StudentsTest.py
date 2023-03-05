@@ -26,12 +26,14 @@ class Test(unittest.TestCase):
         k = len( self.user_id)
         print(f'user_id length =  {k}')
         print(f'user_name length =  {len( self.user_name )}\n')
+        men = 0
         for i in range( k  ) :
             id = self.user_id[i]
             name = self.students.get_name(id)
             self.assertEqual( name, self.user_name[i] )
-            print( f'id {id} : {name}' )
-        men = self.user_id[i]+1    
+            if men == i :
+                men = men + 1
+            print( f'id {id} : {name}' )  
         name = self.students.get_name(men)
         self.assertEqual( 'There is no such user', name )
         print( f'id {men} : {name}' ) 
