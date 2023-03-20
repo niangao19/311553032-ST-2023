@@ -1,35 +1,61 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
-
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
-if __name__ == '__main__' :
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--window-size=1920,1080')
-    options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--window-size=1920,1080')  # maximize the window
+options.add_argument('--disable-gpu')
 
-    driver.maximize_window()
-    driver.get('https://www.nycu.edu.tw/')
-    button = driver.find_element(By.LINK_TEXT,"新聞") 
-    button.click()
-    button = driver.find_element(By.CLASS_NAME,"su-post")   
-    button.click()
-    title = driver.find_element(By.XPATH, '/html/body/div[1]/div/main/div/div/div/article/header/h1')
-    print(title.text)
-    content = driver.find_element(By.XPATH, '/html/body/div[1]/div/main/div/div/div/article/div')
+
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+
+driver.get("https://www.nycu.edu.tw/")
+
+# click news
+element_news = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.LINK_TEXT, "新聞")))
+element_news.click()
+
+
+# click first news
+element_first_news = driver.find_element(
+    By.CSS_SELECTOR, ".su-posts-list-loop a")
+element_first_news.click()
+
+
+# print title and content
+element_title = driver.find_element(
+    By.CSS_SELECTOR, ".entry-header h1").text
+element_content = driver.find_elements(
+    By.CSS_SELECTOR, ".entry-content p")
+print(element_title)
+for content in element_content:
     print(content.text)
 
-    driver.get('https://www.google.com') 
-    input_text = driver.find_element(By.NAME,'q')
-    input_text.send_keys('311553032')
-    input_text.submit()
+
+# open new tab and switch
+driver.execute_script("window.open('');")
+driver.switch_to.window(driver.window_handles[1])
+
+driver.get("https://www.google.com")
+
+# input id and return
+element_input_id = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.NAME, "q")))
+element_input_id.send_keys("311553032")
+element_input_id.send_keys(Keys.RETURN)
 
 
+# print second title
+element_second_title = driver.find_element(
+    By.XPATH, '//*[@id="rso"]/div[3]/div/div/div[1]/div/a/h3').text
+print(element_second_title)
 
-    titles= driver.find_elements(By.XPATH, "//h3[@class='LC20lb MBeuO DKV0Md']")
-    print(titles[1].text)
-    driver.close()
+
+# close the browser
+driver.quit()
