@@ -17,9 +17,9 @@ if __name__ == '__main__' :
     button.click()
     button = driver.find_element(By.CLASS_NAME,"su-post")   
     button.click()
-    title = driver.find_element(By.XPATH, "//*[@class='single-post-title entry-title']")
+    title = driver.find_element(By.XPATH, "//h1[@class='single-post-title entry-title']")
     print(title.text)
-    content = driver.find_element(By.XPATH, '//*[@class="entry-content clr"]')
+    content = driver.find_element(By.XPATH, '//div[@class="entry-content clr"]')
     print(content.text)
 
     driver.get('https://www.google.com')
@@ -28,6 +28,6 @@ if __name__ == '__main__' :
     input_text.submit()
 
 
-    titles= driver.find_elements(By.XPATH, "//*[@class='LC20lb MBeuO DKV0Md']")
+    titles= driver.find_elements(By.XPATH, "//div[@class='LC20lb MBeuO DKV0Md']")
     print(titles[1].text)
     driver.close()
