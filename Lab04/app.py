@@ -12,6 +12,7 @@ if __name__ == '__main__' :
     options.add_argument('--window-size=1920,1080')
     options.add_argument('--disable-gpu')
     
+    
 #     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
     driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options = options)
     driver.maximize_window()
