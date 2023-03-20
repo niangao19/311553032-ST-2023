@@ -29,6 +29,7 @@ if __name__ == '__main__' :
     input_text.submit()
 
 
+    
     titles= driver.find_elements(By.XPATH, '//h3[@class="LC20lb MBeuO DKV0Md"]')
     print(titles[1].text)
     driver.close()
