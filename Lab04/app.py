@@ -27,7 +27,6 @@ if __name__ == '__main__' :
     input_text.send_keys('311553032')
     input_text.submit()
 
-    # button.click()
 
     titles= driver.find_elements(By.XPATH, "//*[@class='LC20lb MBeuO DKV0Md']")
     print(titles[1].text)
