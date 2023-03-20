@@ -37,6 +37,7 @@ print(element_title)
 for content in element_content:
     print(content.text)
 
+    
 
 # open new tab and switch
 driver.execute_script("window.open('');")
