@@ -11,6 +11,7 @@ if __name__ == '__main__' :
     options.add_argument('--window-size=1920,1080')
     options.add_argument('--disable-gpu')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
     driver.maximize_window()
     driver.get('https://www.nycu.edu.tw/')
     button = driver.find_element(By.LINK_TEXT,"新聞") 
@@ -27,6 +28,7 @@ if __name__ == '__main__' :
     input_text.send_keys('311553032')
     input_text.submit()
 
+    # button.click()
 
     titles= driver.find_elements(By.XPATH, "//h3[@class='LC20lb MBeuO DKV0Md']")
     print(titles[1].text)
