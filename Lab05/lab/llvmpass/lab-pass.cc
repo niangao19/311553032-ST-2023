@@ -21,13 +21,6 @@ bool LabPass::doInitialization(Module &M) {
   return true;
 }
 
-static void dumpIR(Function &F)
-{
-  for (auto &BB : F) {
-    errs() << "BB: " << "\n";
-    errs() << BB << "\n";
-  }
-}
 
 static Constant* getI8StrVal(Module &M, char const *str, Twine const &name) {
   LLVMContext &ctx = M.getContext();
@@ -106,7 +99,7 @@ bool LabPass::runOnModule(Module &M) {
     errs() << F.getName() << "\n";
     //errs() << *globalVar << "\n";
 
-    // 開始玩 basic block
+
     BasicBlock &Bstart = F.front();
     BasicBlock &Bend = F.back();
     Instruction &Istart = Bstart.front();
