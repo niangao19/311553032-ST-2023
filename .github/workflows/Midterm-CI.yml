@@ -24,7 +24,7 @@ jobs:
       run: |
         cd Midterm
         python3 -m unittest course_scheduling_system_test.py
-        
+    
     - name: Test Coverage 
       run: |
         cd Midterm
