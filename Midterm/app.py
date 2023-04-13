@@ -25,23 +25,14 @@ def main():
 
     # 選擇中文
     # lan = WebDriverWait(browser, 3).until(EC.presence_of_element_located((By.CLASS_NAME, 'language_switcher_placeholder')))
-    # sel = Select(browser.find_element(By.ID, 'language_select'))
-    #sel.select_by_value("zh-tw")
-    #sel.select_by_index(8)
 
-    # target = browser.find_element(By.XPATH, "//select[@id='language_select']/options[@value='zh-tw')]")
-    # print(target)
 
     h1 = WebDriverWait(browser, 3).until(EC.presence_of_element_located((By.TAG_NAME, 'h1')))
     print(h1.text)
     para = browser.find_elements(By.XPATH, "//section/p ")
     print(para[0].text)
 
-    #search = WebDriverWait(browser, 3).until(EC.element_to_be_clickable((By.NAME, 'q') and (By.XPATH, "//form/input")))
-    # search = browser.find_elements(By.TAG_NAME, 'input')
-    # for i in range(len(search)):
-    #     if(search[i].get_attribute("type") == "text" and search[i].get_attribute("placeholder")):
-    #         print(search[i])
+
 
     # 結束
     time.sleep(3)
