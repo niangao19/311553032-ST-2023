@@ -30,3 +30,7 @@ jobs:
         cd Midterm
         coverage run -m unittest course_scheduling_system_test.py
         coverage report
+    - name: Run selenium code
+      run: |
+        cd Midterm
+        python3 app.py
