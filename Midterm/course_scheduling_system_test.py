@@ -28,26 +28,18 @@ class CssTest(unittest.TestCase):
     def test_q1_4(self):
         self.css.check_course_exist = Mock( return_value= True)
         course = (3, 'Tuesday', 3, 4)
+        course2 = ('DS', '3', 3, 4)   
+        course3 = ('DS', 'Tuesday', '2', 4)
+        course4 = ('DS', 'Tuesday', '2')                     
         with self.assertRaises(TypeError) as ctx:
             self.css.add_course(course)
-
-    # def print_list( self,course_list ):
-    #     workdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    #     sch= '\nMonday\tTuesday\tWednesday\tThursday\tFriday\n'
-    #     for i in range(1,7) :
-    #         have = False
-    #         line = ''
-    #         for j in range(len(workdays)) :
-    #             for cus in course_list :
-    #                 if ( cus[1] == workdays[j]  and (cus[3] == i or cus[2] == i) ) :
-    #                     line += cus[0] + '|\t'
-    #                     have = True
-    #             if not have :
-    #                 line += '|\t'
-    #         sch += line +'\n'
-    #     print(sch)        
-
-
+        with self.assertRaises(TypeError) as ctx:            
+            self.css.add_course(course2)
+        with self.assertRaises(TypeError) as ctx:
+            self.css.add_course(course3) 
+        with self.assertRaises(TypeError) as ctx:           
+            self.css.add_course(course4)            
+     
     def test_q1_5(self):
         self.css.check_course_exist = Mock( return_value= True)
         course1 = ('DS', 'Tuesday', 3, 4)
@@ -60,11 +52,14 @@ class CssTest(unittest.TestCase):
         self.assertEqual( [('Algorithms', 'Monday', 3, 4),('UNIX', 'Thursday', 3, 4)], course_list)
         self.assertEqual( 3,  self.css.check_course_exist.call_count)
 
+    def test_q1_6(self):
+        self.css.check_course_exist = Mock( return_value= True)
+        course1 = ('DS', 'Tuesday', 3, 4)
+        ans = self.css.remove_course(course1)
+        self.assertEqual(ans,False)
+        self.css.check_course_exist = Mock( return_value= False) 
+        ans = self.css.remove_course(course1)
+        self.assertEqual(ans,False)
 
- 
-
-
-
-
-if __name__ == "__main__":
+if __name__ == "__main__":# pragma: no cover
     unittest.main()    
