@@ -31,21 +31,21 @@ class CssTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             self.css.add_course(course)
 
-    def print_list( self,course_list ):
-        workdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        sch= '\nMonday\tTuesday\tWednesday\tThursday\tFriday\n'
-        for i in range(1,7) :
-            have = False
-            line = ''
-            for j in range(len(workdays)) :
-                for cus in course_list :
-                    if ( cus[1] == workdays[j]  and (cus[3] == i or cus[2] == i) ) :
-                        line += cus[0] + '|\t'
-                        have = True
-                if not have :
-                    line += '|\t'
-            sch += line +'\n'
-        print(sch)        
+    # def print_list( self,course_list ):
+    #     workdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    #     sch= '\nMonday\tTuesday\tWednesday\tThursday\tFriday\n'
+    #     for i in range(1,7) :
+    #         have = False
+    #         line = ''
+    #         for j in range(len(workdays)) :
+    #             for cus in course_list :
+    #                 if ( cus[1] == workdays[j]  and (cus[3] == i or cus[2] == i) ) :
+    #                     line += cus[0] + '|\t'
+    #                     have = True
+    #             if not have :
+    #                 line += '|\t'
+    #         sch += line +'\n'
+    #     print(sch)        
 
 
     def test_q1_5(self):
@@ -56,7 +56,7 @@ class CssTest(unittest.TestCase):
         self.css.add_course(course2)
         self.css.remove_course(course1)
         course_list = self.css.get_course_list()
-        self.print_list(course_list)
+        print(self.css)
         self.assertEqual( [('Algorithms', 'Monday', 3, 4),('UNIX', 'Thursday', 3, 4)], course_list)
         self.assertEqual( 3,  self.css.check_course_exist.call_count)
 
