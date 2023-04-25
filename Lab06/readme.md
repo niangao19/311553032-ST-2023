@@ -84,28 +84,33 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
 ```
 #### Valgrind report
 ```
-hmnmax@7ffb996a1894:~/lab6$ make
-g++ -o test_v test.cpp
-g++ -fsanitize=address -g -o test_a test.cpp
-hmnmax@7ffb996a1894:~/lab6$ make
-g++ -o test_v test.cpp
-g++ -fsanitize=address -g -o test_a test.cpp
-hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_a
-==102== Memcheck, a memory error detector
-==102== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==102== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==102== Command: ./test_a
-==102== 
-==102==ASan runtime does not come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD.
-==102== 
-==102== HEAP SUMMARY:
-==102==     in use at exit: 0 bytes in 0 blocks
-==102==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==102== 
-==102== All heap blocks were freed -- no leaks are possible
-==102== 
-==102== For lists of detected and suppressed errors, rerun with: -s
-==102== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
+==33== Memcheck, a memory error detector
+==33== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==33== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==33== Command: ./test_v
+==33== 
+==33== Invalid read of size 4
+==33==    at 0x1088E4: main (in /home/hmnmax/lab6/test_v)
+==33==  Address 0x4d46e14 is 4 bytes after a block of size 400 alloc'd
+==33==    at 0x4866AE8: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==33==    by 0x1088C3: main (in /home/hmnmax/lab6/test_v)
+==33== 
+==33== Invalid write of size 4
+==33==    at 0x10890C: main (in /home/hmnmax/lab6/test_v)
+==33==  Address 0x4d46e14 is 4 bytes after a block of size 400 alloc'd
+==33==    at 0x4866AE8: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-arm64-linux.so)
+==33==    by 0x1088C3: main (in /home/hmnmax/lab6/test_v)
+==33== 
+==33== 
+==33== HEAP SUMMARY:
+==33==     in use at exit: 0 bytes in 0 blocks
+==33==   total heap usage: 2 allocs, 2 frees, 73,104 bytes allocated
+==33== 
+==33== All heap blocks were freed -- no leaks are possible
+==33== 
+==33== For lists of detected and suppressed errors, rerun with: -s
+==33== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
 ```
 > ASan能Valgrind能
 
