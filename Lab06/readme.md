@@ -15,7 +15,7 @@ test_a: test.cpp
 	$(CC) -fsanitize=address -g -o test_a test.cpp
 ```
 ### Heap out-of-bounds read/write
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
 #include <stdio.h>
 int main(int argc, char **argv) {
@@ -108,7 +108,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_a
 ==102== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 ### Stack out-of-bounds read/write
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
 #include <stdio.h>
 int main(int argc, char** argv) {
@@ -203,7 +203,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 Aborted
 ```
 ### Global out-of-bounds read/write
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
 #include <stdio.h>
 int global_arr[100];
@@ -281,7 +281,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==147== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 ### Use-after-free
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
 #include <stdio.h>
 
@@ -382,7 +382,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==161== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
 ### Use-after-return
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
 #include <stdio.h>
 
@@ -478,93 +478,36 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==176== For lists of detected and suppressed errors, rerun with: -s
 ==176== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
+
+
+
+### Outcome
+|  | Valgrind | ASan |
+| -------- | -------- | -------- |
+| Heap out-of-bounds read/write     | V     | V   |
+| Stack out-of-bounds read/write     |  X   |   V |
+| Global out-of-bounds read/write     |   X   |   V |
+| Use-after-free     |V    | V   |
+| Use-after-return  | X    | V     |
 ### redzone
-#### Source Code test.cpp
+#### Source Code
 ```cpp=
+#include <stdio.h>
+
 int main(int argc, char** argv) {
-    char *x = new char[8];
-    char *y = new char[8];
+    int *a = new int[8];
+    int *b = new int[8];
 
-    x[35] = 'a';
+    int res = a[argc+12];
 
-    delete [] x;
-    delete [] y;
+    delete [] a;
+    delete [] b;
     return 0;
 }
+
 ```
 #### ASan report
-```
-hmnmax@7ffb996a1894:~/lab6$  ./test_a
-=================================================================
-==224==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xffffb38007d3 at pc 0xaaaacfaa098c bp 0xfffff1bcb2e0 sp 0xfffff1bcb2f0
-WRITE of size 1 at 0xffffb38007d3 thread T0
-    #0 0xaaaacfaa0988 in main /home/hmnmax/lab6/test.cpp:7
-    #1 0xffffb7a373f8 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-    #2 0xffffb7a374c8 in __libc_start_main_impl ../csu/libc-start.c:392
-    #3 0xaaaacfaa082c in _start (/home/hmnmax/lab6/test_a+0x82c)
 
-0xffffb38007d3 is located 27 bytes to the right of 8-byte region [0xffffb38007b0,0xffffb38007b8)
-allocated by thread T0 here:
-    #0 0xffffb7f6bcec in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:102
-    #1 0xaaaacfaa0928 in main /home/hmnmax/lab6/test.cpp:4
-    #2 0xffffb7a373f8 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-    #3 0xffffb7a374c8 in __libc_start_main_impl ../csu/libc-start.c:392
-    #4 0xaaaacfaa082c in _start (/home/hmnmax/lab6/test_a+0x82c)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /home/hmnmax/lab6/test.cpp:7 in main
-Shadow bytes around the buggy address:
-  0x200ff67000a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff67000b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff67000c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff67000d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff67000e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x200ff67000f0: fa fa 00 fa fa fa 00 fa fa fa[fa]fa fa fa fa fa
-  0x200ff6700100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff6700110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff6700120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff6700130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x200ff6700140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-  Shadow gap:              cc
-==224==ABORTING
-```
-#### Valgrind report
-```
-hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
-==225== Memcheck, a memory error detector
-==225== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==225== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==225== Command: ./test_v
-==225== 
-==225== Invalid write of size 1
-==225==    at 0x108848: main (in /home/hmnmax/lab6/test_v)
-==225==  Address 0x4d46ca3 is 19 bytes after a block of size 16 in arena "client"
-==225== 
-==225== 
-==225== HEAP SUMMARY:
-==225==     in use at exit: 0 bytes in 0 blocks
-==225==   total heap usage: 3 allocs, 3 frees, 72,720 bytes allocated
-==225== 
-==225== All heap blocks were freed -- no leaks are possible
-==225== 
-==225== For lists of detected and suppressed errors, rerun with: -s
-==225== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+hmnmax@7ffb996a1894:~/lab6$ ./test_a
+無
 ```
