@@ -504,10 +504,10 @@ int main(int argc, char** argv) {
     delete [] b;
     return 0;
 }
-
 ```
-#### ASan report
 
+#### ASan report
+```
 hmnmax@7ffb996a1894:~/lab6$ ./test_a
 無
 ```
