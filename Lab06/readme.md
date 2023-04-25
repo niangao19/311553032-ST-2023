@@ -108,7 +108,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_a
 ==102== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 ### Stack out-of-bounds read/write
-#### Source Code
+#### Source Code test.cpp
 ```cpp=
 #include <stdio.h>
 int main(int argc, char** argv) {
