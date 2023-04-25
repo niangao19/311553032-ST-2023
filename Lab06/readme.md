@@ -107,6 +107,8 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_a
 ==102== For lists of detected and suppressed errors, rerun with: -s
 ==102== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
+> ASan能Valgrind能
+
 ### Stack out-of-bounds read/write
 #### Source Code
 ```cpp=
@@ -202,6 +204,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==132== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 Aborted
 ```
+> ASan能Valgrind不能
 ### Global out-of-bounds read/write
 #### Source Code
 ```cpp=
@@ -280,6 +283,8 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==147== For lists of detected and suppressed errors, rerun with: -s
 ==147== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
+> ASan能Valgrind不能
+
 ### Use-after-free
 #### Source Code
 ```cpp=
@@ -381,6 +386,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==161== For lists of detected and suppressed errors, rerun with: -s
 ==161== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
+> ASan能Valgrind能
 ### Use-after-return
 #### Source Code
 ```cpp=
@@ -478,6 +484,8 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==176== For lists of detected and suppressed errors, rerun with: -s
 ==176== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
+> ASan能Valgrind不能
+
 
 
 
@@ -504,8 +512,8 @@ int main(int argc, char** argv) {
     delete [] b;
     return 0;
 }
-```
 
+```
 #### ASan report
 ```
 hmnmax@7ffb996a1894:~/lab6$ ./test_a
