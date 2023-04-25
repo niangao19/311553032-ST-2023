@@ -489,7 +489,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 ==176== For lists of detected and suppressed errors, rerun with: -s
 ==176== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
-> ASan能Valgrind不能
+> ASan能Valgrind能
 
 
 
@@ -501,7 +501,7 @@ hmnmax@7ffb996a1894:~/lab6$ valgrind ./test_v
 | Stack out-of-bounds read/write     |  X   |   V |
 | Global out-of-bounds read/write     |   X   |   V |
 | Use-after-free     |V    | V   |
-| Use-after-return  | X    | V     |
+| Use-after-return  | V    | V     |
 ### redzone
 #### Source Code
 ```cpp=
