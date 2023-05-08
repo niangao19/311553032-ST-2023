@@ -10,3 +10,5 @@
 [![Lab04 CI](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab04-CI.yml/badge.svg)](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab04-CI.yml)
 
 [![Lab05 CI](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab05-CI.yml/badge.svg)](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab05-CI.yml)
+
+[![Lab08 CI](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab08-CI.yml/badge.svg)](https://github.com/niangao19/311553032-ST-2023/actions/workflows/Lab08-CI.yml)
