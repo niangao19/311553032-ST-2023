@@ -29,6 +29,6 @@ jobs:
       - name: Verify result
         run: |
           cd Lab08/lab
-          chmod -x ./src/prog
+          
           bash -c "time python3 solve.py"
           python3 verify.py
