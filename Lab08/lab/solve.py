@@ -1,26 +1,30 @@
 import angr
 import sys # for stdin
+import struct
+import re
 
 EQUATION_CNT = 14
 VARIABLE_CNT = 15
 
 main_addr = 0x4011a9
-find_addr = 0x401363
+find_addr = 0x401371
 # find_addr = 0x401371
-avoid_addr = 0x40134d
+avoid_addr = [0x40134d,0x40121a]
 
 class my_scanf(angr.SimProcedure):
     def run(self,fmt,n): # 参数为 (self + 该函数实际参数)
-        simfd = self.state.posix.get_fd(0) # stdin
-        data,real_size = simfd.read_data(0x04) # 注意该函数返回两个值 第一个是读到的数据内容 第二个数内容长度
+        simfd = self.state.posix.get_fd(sys.stdin.fileno())
+        data,real_size = simfd.read_data(4) # 注意该函数返回两个值 第一个是读到的数据内容 第二个数内容长度
         self.state.memory.store(n,data) # 将数据保存到相应参数内
-        return real_size # 返回原本函数该返回的东西
+        return 1 # 返回原本函数该返回的东西
+
+
 
 ########################################################
 
 proj = angr.Project('./src/prog', load_options={'auto_load_libs': False})
 proj.hook_symbol('__isoc99_scanf', my_scanf(), replace=True)
-
+proj.hook_symbol('printf', angr.SIM_PROCEDURES['stubs']['ReturnUnconstrained'](), replace=True)
 state = proj.factory.blank_state(addr=main_addr)
 
 simgr = proj.factory.simulation_manager(state)
@@ -34,7 +38,7 @@ if simgr.found:
     # num_strings = [string_data[i:i+4] for i in range(0, len(string_data), 4)]
     nums = []
     for i in range(0,len(string_data),4):
-        input = simgr.found[0].posix.dumps(sys.stdin.fileno())[i:i+4]
+        input = string_data[i:i+4]
         input = int.from_bytes(input, byteorder='little', signed=True)
         print( f'x{int(i/4)} : {input}' )
         nums.append(input)
