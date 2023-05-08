@@ -1,7 +1,5 @@
 import angr
 import sys # for stdin
-import struct
-import re
 
 EQUATION_CNT = 14
 VARIABLE_CNT = 15
@@ -12,11 +10,11 @@ find_addr = 0x401371
 avoid_addr = [0x40134d,0x40121a]
 
 class my_scanf(angr.SimProcedure):
-    def run(self,fmt,n): # 参数为 (self + 该函数实际参数)
+    def run(self,fmt,n): 
         simfd = self.state.posix.get_fd(sys.stdin.fileno())
-        data,real_size = simfd.read_data(4) # 注意该函数返回两个值 第一个是读到的数据内容 第二个数内容长度
-        self.state.memory.store(n,data) # 将数据保存到相应参数内
-        return 1 # 返回原本函数该返回的东西
+        data,real_size = simfd.read_data(4) 
+        self.state.memory.store(n,data) 
+        return 1 
 
 
 
